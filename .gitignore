@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+env/
+*.egg-info/
+lambda_package.zip
+
+# Node
+node_modules/
+dist/
+.DS_Store
+
+# Misc
+*.zip
+scratch.py
