@@ -10,7 +10,8 @@ def get_conn():
         host=os.environ.get("DB_HOST", "localhost"),
         user=os.environ.get("DB_USER", "root"),
         password=os.environ.get("DB_PASSWORD", "harishni"),
-        database=os.environ.get("DB_NAME", "booktracker")
+        database=os.environ.get("DB_NAME", "booktracker"),
+        port=int(os.environ.get("DB_PORT", 3306))
     )
 
 def load():
