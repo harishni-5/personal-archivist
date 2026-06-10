@@ -18,7 +18,7 @@ load_dotenv()
 
 app = FastAPI()
 
-FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://frontend-rho-neon-857v0mm3ho.vercel.app")
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://personal-archivist-1-q20dzfqv9-harishni-5s-projects.vercel.app")
 
 app.add_middleware(
     CORSMiddleware,
