@@ -13,6 +13,10 @@ https://personal-archivist-production.up.railway.app
 **API Documentation (Swagger UI):**
 https://personal-archivist-production.up.railway.app/docs
 
+**video (drive link):**
+https://drive.google.com/file/d/1IK42hCsUAff5_NliiR9QIwlzWCOLPFwZ/view?usp=sharing
+
+
 ---
 
 ## ✨ Features
