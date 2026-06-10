@@ -32,7 +32,7 @@ ALGORITHM            = "HS256"
 TOKEN_EXPIRE_HOURS   = 24
 GOOGLE_CLIENT_ID     = os.environ.get("GOOGLE_CLIENT_ID", "")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", "")
-GOOGLE_REDIRECT_URI  = os.environ.get("GOOGLE_REDIRECT_URI", "https://saamcc5galfz3ikeb5betxza440yrmnh.lambda-url.us-east-1.on.aws/api/auth/google/callback")
+GOOGLE_REDIRECT_URI  = os.environ.get("GOOGLE_REDIRECT_URI", "https://personal-archivist-production.up.railway.app/api/auth/google/callback")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 bearer = HTTPBearer()
