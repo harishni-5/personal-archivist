@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const API = 'https://saamcc5galfz3ikeb5betxza440yrmnh.lambda-url.us-east-1.on.aws';
+const API = 'https://personal-archivist-production.up.railway.app';
 
 
 const AuthPage = ({ onLogin }) => {

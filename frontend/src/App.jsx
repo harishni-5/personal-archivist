@@ -5,7 +5,7 @@ import AddBook from './pages/AddBook';
 import AuthPage from './pages/AuthPage';
 import './index.css';
 
-const API = 'https://saamcc5galfz3ikeb5betxza440yrmnh.lambda-url.us-east-1.on.aws';
+const API = 'https://personal-archivist-production.up.railway.app';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
