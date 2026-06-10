@@ -93,17 +93,38 @@ def register(body: RegisterIn):
 @app.post("/api/auth/login")
 def login(body: LoginIn):
     user = store.get_user_by_email(body.email)
+
     if not user:
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
 
     try:
-        valid = verify_password(body.password, user["password_hash"])
+        valid = verify_password(
+            body.password,
+            user["password_hash"]
+        )
     except Exception:
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
 
     if not valid:
-        raise HTTPException(status_code=401, detail="Invalid email or password")
-        return {"token": create_token(user["id"], user["username"]), "username": user["username"], "id": user["id"]}
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    return {
+        "token": create_token(
+            user["id"],
+            user["username"]
+        ),
+        "username": user["username"],
+        "id": user["id"]
+    }
 
 @app.get("/api/auth/me")
 def me(current_user: dict = Depends(get_current_user)):
