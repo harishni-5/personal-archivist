@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const API = 'http://localhost:8000';
+const API = 'https://saamcc5galfz3ikeb5betxza440yrmnh.lambda-url.us-east-1.on.aws';
+
 
 const AuthPage = ({ onLogin }) => {
   const [mode, setMode] = useState('login'); // 'login' | 'register'

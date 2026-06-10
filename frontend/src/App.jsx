@@ -5,7 +5,7 @@ import AddBook from './pages/AddBook';
 import AuthPage from './pages/AuthPage';
 import './index.css';
 
-const API = 'http://localhost:8000';
+const API = 'https://saamcc5galfz3ikeb5betxza440yrmnh.lambda-url.us-east-1.on.aws';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');

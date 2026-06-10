@@ -18,7 +18,7 @@ load_dotenv()
 
 app = FastAPI()
 
-FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "https://frontend-rho-neon-857v0mm3ho.vercel.app")
 
 app.add_middleware(
     CORSMiddleware,
@@ -32,9 +32,9 @@ ALGORITHM            = "HS256"
 TOKEN_EXPIRE_HOURS   = 24
 GOOGLE_CLIENT_ID     = os.environ.get("GOOGLE_CLIENT_ID", "")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", "")
-GOOGLE_REDIRECT_URI  = os.environ.get("GOOGLE_REDIRECT_URI", "http://localhost:8000/api/auth/google/callback")
+GOOGLE_REDIRECT_URI  = os.environ.get("GOOGLE_REDIRECT_URI", "https://saamcc5galfz3ikeb5betxza440yrmnh.lambda-url.us-east-1.on.aws/api/auth/google/callback")
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 bearer = HTTPBearer()
 
 def hash_password(p): return pwd_context.hash(p)
@@ -93,9 +93,17 @@ def register(body: RegisterIn):
 @app.post("/api/auth/login")
 def login(body: LoginIn):
     user = store.get_user_by_email(body.email)
-    if not user or not verify_password(body.password, user["password_hash"]):
+    if not user:
         raise HTTPException(status_code=401, detail="Invalid email or password")
-    return {"token": create_token(user["id"], user["username"]), "username": user["username"], "id": user["id"]}
+
+    try:
+        valid = verify_password(body.password, user["password_hash"])
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    if not valid:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+        return {"token": create_token(user["id"], user["username"]), "username": user["username"], "id": user["id"]}
 
 @app.get("/api/auth/me")
 def me(current_user: dict = Depends(get_current_user)):
@@ -132,7 +140,8 @@ async def google_callback(code: str):
         guser = userinfo.json()
 
     email = guser["email"]
-    name  = guser.get("name", email.split("@")[0])
+    base_name = guser.get("name", email.split("@")[0])
+    name = f"{base_name}_{os.urandom(3).hex()}"
     user  = store.get_user_by_email(email)
     if not user:
         user_id = store.create_user(name, email, hash_password(os.urandom(32).hex()))
@@ -187,3 +196,12 @@ def delete_book(isbn: str, current_user: dict = Depends(get_current_user)):
 @app.get("/api/stats")
 def stats(current_user: dict = Depends(get_current_user)):
     return store.compute_stats(store.load(), current_user["id"])
+
+
+
+
+
+#lambda
+from mangum import Mangum
+
+handler = Mangum(app)
